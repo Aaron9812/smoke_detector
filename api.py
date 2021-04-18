@@ -2,6 +2,7 @@
 import mariadb
 import sys
 import secrets
+import time, random
 
 # Connect to MariaDB Platform
 def connect_to_DB():
@@ -21,11 +22,20 @@ def connect_to_DB():
     
     
 
-def adding_data(temperature, humidity):
-    conn = connect_to_DB()
-    cur = conn.cursor()
-    try: 
-        cur.execute("INSERT INTO Test_Data (temperature,humidity) VALUES (?, ?)", (temperature,humidity)) 
-    except mariadb.Error as e: 
-        print(f"Error: {e}")
-    conn.commit() 
+def adding_data():
+    con = connect_to_DB()
+    cur = con.cursor()
+
+    for i in range(600):
+        temp = random.uniform(1.5, 35.5)
+        humidity = random.uniform(0.05, 0.95)
+        time.sleep(1)
+        try: 
+            cur.execute("INSERT INTO Test_Data (temperature,humidity) VALUES (?, ?)", (temp,humidity)) 
+        except mariadb.Error as e: 
+            print(f"Error: {e}")
+    con.commit() 
+    con.close()
+
+if __name__ == "__main__":
+    adding_data()
