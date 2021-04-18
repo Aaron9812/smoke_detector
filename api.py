@@ -1,12 +1,16 @@
 # Module Imports
 import mariadb
 import sys
+import secrets
 
 # Connect to MariaDB Platform
 try:
     conn = mariadb.connect(
-        
-
+        user=secrets.Database_user,
+        password=secrets.Database_pw,
+        host="159.hosttech.eu",
+        port=3306,
+        database="IOXCoding"
     )
 except mariadb.Error as e:
     print(f"Error connecting to MariaDB Platform: {e}")
