@@ -10,20 +10,24 @@ import api
 
 from datetime import date
 
+# external CSS stylesheets
+external_stylesheets = ["static\dashboard.css"]
+    
+
 app = dash.Dash(__name__)
 
 def clean_Data():
     con = api.connect_to_DB()
-    df =pd.read_sql_query("SELECT * from Test_Data", con)
+    df = pd.read_sql_query("SELECT * from Test_Data", con)
     con.close()
+    
+    df["id"] = pd.to_datetime(df["timestamp"])
+    df = df.set_index(["id"])
+    df.sort_index(inplace=True, ascending=True)
     return df
 
-dff = clean_Data()
-
-print(dff[:5])
-
 app.layout = html.Div([
-    html.H1("IOT Dashboard", style={'text-align': 'center'}),
+    html.H1("IOT Dashboard"),
 
     dash_core_components.DatePickerRange(
         id="my-date-picker-range",
@@ -47,14 +51,16 @@ app.layout = html.Div([
 )
 
 def update_graph(start_date, end_date):
-    print(start_date,end_date)
-
-    fig_1 = px.line(dff, 
+    
+    dff_filtered = dff.loc[start_date : end_date]
+    
+    fig_1 = px.line(dff_filtered, 
         x="timestamp", y="temperature")
-    fig_2 = px.line(dff, 
+    fig_2 = px.line(dff_filtered, 
         x="timestamp", y="humidity")
 
     return fig_1 , fig_2
 
 if __name__ == "__main__":
+    dff = clean_Data()
     app.run_server(debug=True)

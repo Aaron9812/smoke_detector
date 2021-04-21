@@ -34,7 +34,10 @@ def adding_data():
             cur.execute("INSERT INTO Test_Data (temperature,humidity) VALUES (?, ?)", (temp,humidity)) 
         except mariadb.Error as e: 
             print(f"Error: {e}")
-    con.commit() 
+        
+        if i % 100 == 0:
+            con.commit()
+            print("Commited")
     con.close()
 
 if __name__ == "__main__":
