@@ -19,8 +19,6 @@ def connect_to_DB():
         print(f"Error connecting to MariaDB Platform: {e}")
         sys.exit(1)
     # Get Curso
-    
-    
 
 def adding_data():
     con = connect_to_DB()
@@ -41,4 +39,5 @@ def adding_data():
     con.close()
 
 if __name__ == "__main__":
-    adding_data()
+    pass
+    #adding_data()

@@ -12,7 +12,6 @@ body
 	background-image: url("Hintergrundbild_30_04_2021.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-height: 650px;
 }
 
 
@@ -35,7 +34,7 @@ button{
 	border:none;
 	border-radius: 50px;
 	cursor: pointer;
-	transition: all 0.3s ease 0s
+	transition: all 0.3s ease 0s;
 	font-size: 20px;
 }
 
@@ -45,6 +44,11 @@ button:hover{
 	color: rgba(0,136,169,0.8);
 }
 
+
+.btn_login:hover{
+	background-color: white;
+	color: rgba(0,136,169,0.8);
+}
 
 li, a, button {
 	font-family: 'Roboto', sans-serif;

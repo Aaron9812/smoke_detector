@@ -1,66 +1,80 @@
-import dash
-import dash_core_components 
-import dash_html_components as html
-from dash.dependencies import Input, Output
-
-
-import pandas as pd
-import plotly.express as px
+from flask import Flask, render_template, request, redirect, url_for, session
 import api
+import re
+import mariadb
 
-from datetime import date
+app = Flask(__name__)
 
-# external CSS stylesheets
-external_stylesheets = ["static\dashboard.css"]
-    
+@app.route("/")
+def index():
+    return render_template("index.html")
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    msg=""
+    if request.method == "POST" and "email" in request.form and "password" in request.form:
+        username = request.form["email"]
+        password = request.form["password"]
+        
+        con = api.connect_to_DB()
+        cursor = con.cursor()
+        try:   
+            cursor.execute(f"SELECT * FROM users WHERE email = '{username}' AND password = '{password}'")
+        except mariadb.Error as e:
+            print(f"Error: {e}")
 
-app = dash.Dash(__name__)
+        account = cursor.fetchone()
+        print(account)
+        print(account)
+        print("Hello\n")
 
-def clean_Data():
-    con = api.connect_to_DB()
-    df = pd.read_sql_query("SELECT * from Test_Data", con)
-    con.close()
-    
-    df["id"] = pd.to_datetime(df["timestamp"])
-    df = df.set_index(["id"])
-    df.sort_index(inplace=True, ascending=True)
-    return df
+        if account:
+            session["loggedin"] = True
+            session['id'] = account[0]
+            session['username'] = account[3]
+            msg = 'Logged in successfully !'
+            return render_template('index.html', msg = msg)
+        else:
+            msg = 'Incorrect username / password !'
+    return render_template('login.html', msg = msg)
 
-app.layout = html.Div([
-    html.H1("IOT Dashboard"),
+@app.route("/logout")
+def logout():
+    session.pop("loggedin", None)
+    session.pop('id', None)
+    session.pop('username', None)
+    return redirect(url_for('login'))
 
-    dash_core_components.DatePickerRange(
-        id="my-date-picker-range",
-        min_date_allowed=date(2021, 4, 17),
-        max_date_allowed=date(2021, 12, 31),
-        start_date=date.today(),
-        end_date=date(2021, 8, 25)
-    ),
-    
-    html.Br(),
+@app.route('/register', methods =['GET', 'POST'])
+def register():
+    msg = ''
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form :
+        username = request.form['username']
+        password = request.form['password']
+        email = request.form['email']
+        con = api.connect_to_DB
+        cursor = con.cursor()
+        try:   
+            cursor.execute(f"SELECT * FROM users WHERE username = {username} AND password = {password}")
+        except mariadb.Error as e:
+            print(f"Error: {e}")
 
-    dash_core_components.Graph(id="temp-chart"),
-    dash_core_components.Graph(id="humidity-chart")
-])
-
-@app.callback(
-    [Output(component_id="temp-chart", component_property="figure"),
-    Output(component_id="humidity-chart", component_property="figure")],
-    [Input(component_id="my-date-picker-range", component_property="start_date"),
-    Input(component_id="my-date-picker-range", component_property="end_date")]
-)
-
-def update_graph(start_date, end_date):
-    
-    dff_filtered = dff.loc[start_date : end_date]
-    
-    fig_1 = px.line(dff_filtered, 
-        x="timestamp", y="temperature")
-    fig_2 = px.line(dff_filtered, 
-        x="timestamp", y="humidity")
-
-    return fig_1 , fig_2
-
+        account = cursor.fetchone()
+        if account:
+            msg = 'Account already exists !'
+        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+            msg = 'Invalid email address !'
+        elif not re.match(r'[A-Za-z0-9]+', username):
+            msg = 'Username must contain only characters and numbers !'
+        elif not username or not password or not email:
+            msg = 'Please fill out the form !'
+        else:
+            cursor.execute('INSERT INTO accounts VALUES (NULL, % s, % s, % s)', (username, password, email, ))
+            mysql.connection.commit()
+            msg = 'You have successfully registered !'
+    elif request.method == 'POST':
+        msg = 'Please fill out the form !'
+    return render_template('register.html', msg = msg)
+        
 if __name__ == "__main__":
-    dff = clean_Data()
-    app.run_server(debug=True)
+    app.secret_key = '12'
+    app.run(debug=True)
