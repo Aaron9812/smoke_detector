@@ -23,9 +23,6 @@ def login():
             print(f"Error: {e}")
 
         account = cursor.fetchone()
-        print(account)
-        print(account)
-        print("Hello\n")
 
         if account:
             session["loggedin"] = True
