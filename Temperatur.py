@@ -2,7 +2,7 @@
 
 # Temperaturabfrage
 import os, sys, time, datetime
-
+import api
 
 def aktuelleTemperatur():
       
@@ -33,6 +33,7 @@ while True:
     Datum = datetime.datetime.now() #aktueller Zeitstempel
     print ("Aktuelle Temperatur : ", messdaten, "°C",
     "in der ", schleifenZaehler, ". Messabfrage", "Zeitstempel: ", Datum)
+    adding_data(device_id=1,temp=messdaten)
     time.sleep(schleifenPause)
     schleifenZaehler = schleifenZaehler + 1
     
