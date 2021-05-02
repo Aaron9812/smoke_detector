@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0px;
+}
+
+
+body
+{
+	background-image: url("Hintergrundbild_30_04_2021.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-height: 650px;
+}
+
+
+nav{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	min-height: 65px;
+	border-color:white;
+	border-bottom: 2px solid white;
+	font-family: 'Roboto', sans-serif;
+}
+
+
+button{
+	margin-left: 60px;
+	padding: 8px 25px;
+	background-color: rgba(0,136,169,0.8);
+	color:white;
+	border:none;
+	border-radius: 50px;
+	cursor: pointer;
+	transition: all 0.3s ease 0s
+	font-size: 20px;
+}
+
+
+button:hover{
+	background-color: white;
+	color: rgba(0,136,169,0.8);
+}
+
+
+li, a, button {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+	font-size: 18px;
+	text-decoration: none;
+}
+
+input {
+	font-family: 'Roboto';
+	font-size: 20px;
+	border: none;
+	margin-left:70px;
+	margin-top: 15px;
+	padding: 3px;
+	width: 400px;
+}
+
+
+.logo{
+	color: white;
+	cursor: pointer;
+	text-transform: uppercase;
+	letter-spacing: 10px;
+	font-size: 26px;
+	margin-right: auto;
+	width: 50px;
+	padding-left: 80px;
+}
+
+
+.nav__links{
+	display: flex;
+	justify-content: space-around;
+	width:50%;
+	padding-right: 80px;
+	padding-top: 15px;
+}
+
+
+.nav__links a{
+	color: white;
+	transition: all 0.3s ease 0s;
+}
+
+
+.nav__links button{
+	margin-top: -15px;
+	margin-bottom: 5px;
+}
+
+
+.nav__links li{
+	display: inline-block;
+	padding: 0px 20px;
+}
+
+
+.nav__links li a{
+	transition: all 0.3s ease 0s
+}
+
+
+.nav__links li a:hover{
+	color: #0088a9
+}
+
+
+/*Tittel --> Smarter Rauchmelder */
+.title{
+	margin-top: 100px;
+	margin-left: 70px;
+	color: white;
+	font-family: 'Roboto';
+	font-size: 72px;
+}
+
+
+
+/*Unter Tittel --> Smarter Rauchmelder */
+.subtitle{
+	margin-top: 10px;
+	margin-left: 75px;
+	color: white;
+	font-family: 'Roboto';
+	font-size: 22px;
+	font-weight: 400;
+}
+
+
+/*Registrieren Button */
+.btn_reg{
+	font-size: 20px;
+	margin-top: 20px;
+	margin-left: 75px;
+}
+
+
+.submit_btn_register{
+	font-size: 20px;
+	margin-top: 20px;
+	margin-left: 75px;
+}
+
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 13px;
+  width: 100%;
+  color: black;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  text-align: center;
+}
+
+/*Registrieren Felder anpassen */
+#first_name {
+	width: 195px;
+}
+
+
+#last_name {
+	margin-left:10px;
+	width: 195px;
+}
+
+
+#street {
+	width: 300px;
+}
+
+
+#street_no {
+	margin-left:10px;
+	width: 90px;
+}
+
+
+#zipcode {
+	width: 100px;
+}
+
+#city {
+	margin-left:10px;
+	width: 290px;
+}
+
+
+
+
