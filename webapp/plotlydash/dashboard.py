@@ -21,7 +21,7 @@ def init_dashboard(server):
         ]
     )    
     
-    df = clean_Data()
+    dff = clean_Data()
 
     #creating the dash layout 
     dash_app.layout = html.Div([
@@ -73,7 +73,6 @@ def clean_Data():
     df = df.set_index(["id"])
     df.sort_index(inplace=True, ascending=True)
     return df
-
 
 if __name__ == "__main__":
     dff = clean_Data()

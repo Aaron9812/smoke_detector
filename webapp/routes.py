@@ -1,10 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from flask import current_app as app
 import api
 import re
 import mariadb
-import dashboard
-
-app = Flask(__name__)
 
 @app.route("/")
 def index():
@@ -73,10 +71,3 @@ def register():
         msg = 'Please fill out the form !'
     return render_template('register.html', msg = msg)
 
-@app.route("/dashboard")
-def dashboard():
-    return init_dashboard(server)
-
-if __name__ == "__main__":
-    app.secret_key = '12'
-    app.run(debug=True)
