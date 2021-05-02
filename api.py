@@ -20,7 +20,7 @@ def connect_to_DB():
         sys.exit(1)
     # Get Curso
 
-def adding_data():
+def adding_random_data():
     con = connect_to_DB()
     cur = con.cursor()
 
@@ -35,9 +35,21 @@ def adding_data():
         
         if i % 100 == 0:
             con.commit()
-            print("Commited")
+            
     con.close()
 
+def adding_data(device_id, temp):
+    con = connect_to_DB()
+    cur = con.cursor()
+
+    try: 
+        cur.execute("INSERT INTO data (temperature, device_id) VALUES (?, ?)", (temp,device_id)) 
+    except mariadb.Error as e: 
+        print(f"Error: {e}")
+
+    con.commit()
+    con.close()
+    
 if __name__ == "__main__":
-    pass
-    #adding_data()
+    adding_random_data()
+    
