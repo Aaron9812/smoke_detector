@@ -15,7 +15,7 @@ def init_dashboard(server):
 
     dash_app = dash.Dash(
         server=server,
-        requests_pathname_prefix="/dashapp/",
+        routes_pathname_prefix="/dashapp/",
         external_stylesheets=[
             "/static/css/dashboard.css"
         ]
@@ -26,7 +26,7 @@ def init_dashboard(server):
     #creating the dash layout 
     dash_app.layout = html.Div([
         html.H1("IOT Dashboard"),
-
+        
         dash_core_components.DatePickerRange(
             id="my-date-picker-range",
             min_date_allowed=date(2021, 4, 17),
@@ -38,13 +38,16 @@ def init_dashboard(server):
         html.Br(),
 
         dash_core_components.Graph(id="temp-chart"),
-        dash_core_components.Graph(id="humidity-chart")
+        dash_core_components.Graph(id="humidity-chart"),
+
+        init_callbacks(dash_app, dff),
+        
     ])
     
     return dash_app.server
 
-def init_callbacks(dash_app):
-    @app.callback(
+def init_callbacks(dash_app, dff):
+    @dash_app.callback(
         [Output(component_id="temp-chart", component_property="figure"),
         Output(component_id="humidity-chart", component_property="figure")],
         [Input(component_id="my-date-picker-range", component_property="start_date"),
@@ -76,4 +79,4 @@ def clean_Data():
 
 if __name__ == "__main__":
     dff = clean_Data()
-    app.run_server(debug=True)
+    dash_app.run_server(debug=True)
