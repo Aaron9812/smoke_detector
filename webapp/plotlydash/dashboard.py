@@ -2,7 +2,7 @@ import dash
 import dash_core_components 
 import dash_html_components as html
 from dash.dependencies import Input, Output
-
+from flask import session
 
 import pandas as pd
 import plotly.express as px
@@ -21,8 +21,9 @@ def init_dashboard(server):
         ]
     )    
     
+    
     dff = clean_Data()
-
+    session["id"]
     #creating the dash layout 
     dash_app.layout = html.Div([
         html.H1("IOT Dashboard"),

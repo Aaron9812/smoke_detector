@@ -6,7 +6,11 @@ import mariadb
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    try:
+        if session["loggedin"]:
+            return render_template("index.html")
+    except:
+        return render_template("login.html")
 @app.route("/login", methods=["GET", "POST"])
 def login():
     msg=""
@@ -28,10 +32,13 @@ def login():
             session['id'] = account[0]
             session['username'] = account[3]
             msg = 'Logged in successfully !'
-            return render_template('index.html', msg = msg)
+            print(session["id"])
+            return redirect(url_for('/dashapp/'))
         else:
             msg = 'Incorrect username / password !'
-    return render_template('login.html', msg = msg)
+            return render_template('index.html', msg = msg)
+        
+    return render_template('index.html', msg = msg)
 
 @app.route("/logout")
 def logout():
