@@ -38,12 +38,12 @@ def adding_random_data():
             
     con.close()
 
-def adding_data(device_id, temp):
+def adding_data(device_id, temp,co2, lpg, smoke):
     con = connect_to_DB()
     cur = con.cursor()
 
     try: 
-        cur.execute("INSERT INTO data (temperature, device_id) VALUES (?, ?)", (temp,device_id)) 
+        cur.execute("INSERT INTO data (temperature, co, lpg, smoke, device_id) VALUES (?, ?, ?, ?, ?)", (temp, ,co2, lpg, smoke, device_id)) 
     except mariadb.Error as e: 
         print(f"Error: {e}")
 
