@@ -43,7 +43,7 @@ def adding_data(device_id, temp,co2, lpg, smoke):
     cur = con.cursor()
 
     try: 
-        cur.execute("INSERT INTO data (temperature, co, lpg, smoke, device_id) VALUES (?, ?, ?, ?, ?)", (temp, ,co2, lpg, smoke, device_id)) 
+        cur.execute("INSERT INTO data (temperature, co, lpg, smoke, device_id) VALUES (?, ?, ?, ?, ?)", (temp,co2, lpg, smoke, device_id)) 
     except mariadb.Error as e: 
         print(f"Error: {e}")
 

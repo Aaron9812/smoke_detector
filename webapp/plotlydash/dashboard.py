@@ -38,8 +38,12 @@ def init_dashboard(server):
         
         html.Br(),
 
-        dash_core_components.Graph(id="temp-chart"),
-        dash_core_components.Graph(id="humidity-chart"),
+        dash_core_components.Graph(
+            id="temp-chart"
+            ),
+        dash_core_components.Graph(
+            id="humidity-chart"
+            ),
 
         init_callbacks(dash_app, dff),
         
@@ -60,7 +64,7 @@ def init_callbacks(dash_app, dff):
         dff_filtered = dff.loc[start_date : end_date]
         
         fig_1 = px.line(dff_filtered, 
-            x="timestamp", y="temperature")
+            x="timestamp", y="temperature", title="Temp chart")
         fig_2 = px.line(dff_filtered, 
             x="timestamp", y="humidity")
 
