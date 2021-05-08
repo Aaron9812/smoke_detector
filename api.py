@@ -1,8 +1,10 @@
 # Module Imports
+import googlemaps
 import mariadb
 import sys
 import secrets
 import time, random
+import requests
 
 # Connect to MariaDB Platform
 def connect_to_DB():
@@ -49,7 +51,20 @@ def adding_data(device_id, temp,co2, lpg, smoke):
 
     con.commit()
     con.close()
-    
+
+def lichtan():
+    request = requests.post("https://maker.ifttt.com/trigger/licht_an/with/key/"+ secrets.ifttt_key)
+
+def lichtaus():
+    request = requests.post("https://maker.ifttt.com/trigger/licht_aus/with/key/"+ secrets.ifttt_key)
+
+def get_lat_long(address):
+    gmaps = googlemaps.Client(key=secrets.google_Maps_key)
+
+    geocode_result = gmaps.geocode(address)
+    lat = geocode_result[0]["geometry"]["location"]["lat"]
+    lng = geocode_result[0]["geometry"]["location"]["lng"]
+    return lat,lng
 if __name__ == "__main__":
-    adding_random_data()
+    lichtaus()
     

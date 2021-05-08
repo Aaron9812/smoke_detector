@@ -66,7 +66,7 @@ def init_callbacks(dash_app, dff):
         fig_1 = px.line(dff_filtered, 
             x="timestamp", y="temperature", title="Temp chart")
         fig_2 = px.line(dff_filtered, 
-            x="timestamp", y="humidity")
+            x="timestamp", y="co")
 
         return fig_1 , fig_2
 
@@ -74,7 +74,7 @@ def init_callbacks(dash_app, dff):
 
 def clean_Data():
     con = api.connect_to_DB()
-    df = pd.read_sql_query("SELECT * from Test_Data", con)
+    df = pd.read_sql_query("SELECT * from data", con)
     con.close()
     
     df["id"] = pd.to_datetime(df["timestamp"])
