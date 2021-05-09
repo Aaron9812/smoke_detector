@@ -58,13 +58,19 @@ def light_on():
 def light_off():
     request = requests.post("https://maker.ifttt.com/trigger/licht_aus/with/key/"+ secrets.ifttt_key)
 
-def get_lat_long(address):
+def get_geo_data(address):
     gmaps = googlemaps.Client(key=secrets.google_Maps_key)
 
     geocode_result = gmaps.geocode(address)
+
+    try:
+        country_code = geocode_result[0]["address_components"][7]["short_name"]
+    except:
+        country_code = "DE"
     lat = geocode_result[0]["geometry"]["location"]["lat"]
     lng = geocode_result[0]["geometry"]["location"]["lng"]
-    return lat,lng
+    
+    return country_code , lat , lng
 if __name__ == "__main__":
-    lichtaus()
+    get_geo_data("Leinerstr. 23 78462 Konstanz")
     

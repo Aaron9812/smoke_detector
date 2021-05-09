@@ -50,32 +50,32 @@ def logout():
 
 @app.route('/register', methods =['GET', 'POST'])
 def register():
-    msg = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form :
-        username = request.form['username']
-        password = request.form['password']
-        email = request.form['email']
-        con = api.connect_to_DB
-        cursor = con.cursor()
-        try:   
-            cursor.execute(f"SELECT * FROM users WHERE username = {username} AND password = {password}")
-        except mariadb.Error as e:
-            print(f"Error: {e}")
+    if request.method == 'POST' and 'first_name' in request.form and 'last_name' in request.form and 'email' in request.form and 'phone_no' in request.form and 'password' in request.form and 'street' in request.form and 'street_no' in request.form and 'zipcode' in request.form and 'city' in request.form:
 
-        account = cursor.fetchone()
-        if account:
-            msg = 'Account already exists !'
-        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
-            msg = 'Invalid email address !'
-        elif not re.match(r'[A-Za-z0-9]+', username):
-            msg = 'Username must contain only characters and numbers !'
-        elif not username or not password or not email:
-            msg = 'Please fill out the form !'
-        else:
-            cursor.execute('INSERT INTO accounts VALUES (NULL, % s, % s, % s)', (username, password, email, ))
-            mysql.connection.commit()
-            msg = 'You have successfully registered !'
-    elif request.method == 'POST':
-        msg = 'Please fill out the form !'
-    return render_template('register.html', msg = msg)
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        email = request.form['email']
+        phone_no = request.form['phone_no']
+        password = request.form['password']
+        street = request.form['street']
+        street_no = request.form['street_no']
+        zipcode = request.form['zipcode']
+        city = request.form['city']
+        
+        address = street + street_no + zipcode + city
+        country_code, geo_lat, geo_long = api.get_geo_data(address) 
+        
+
+        con = api.connect_to_DB()
+        cursor = con.cursor()
+
+        query1 = f"INSERT INTO users (first_name, last_name, email, phone_number, password, street, street_nr, zip, city, country_code, geo_lat, geo_long) VALUES ('{first_name}', '{last_name}', '{email}', '{phone_no}', '{password}', '{street}', '{street_no}', {zipcode}, '{city}', '{country_code}', {geo_lat}, {geo_long})"
+        cursor.execute(query1)
+        con.commit()
+        con.close()
+
+        return render_template('you_are_registered.html')
+
+    else:
+        return render_template('register.html')
 
