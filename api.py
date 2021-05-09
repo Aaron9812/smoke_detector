@@ -52,10 +52,10 @@ def adding_data(device_id, temp,co2, lpg, smoke):
     con.commit()
     con.close()
 
-def lichtan():
+def light_on():
     request = requests.post("https://maker.ifttt.com/trigger/licht_an/with/key/"+ secrets.ifttt_key)
 
-def lichtaus():
+def light_off():
     request = requests.post("https://maker.ifttt.com/trigger/licht_aus/with/key/"+ secrets.ifttt_key)
 
 def get_lat_long(address):

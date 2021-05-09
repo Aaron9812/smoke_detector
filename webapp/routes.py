@@ -40,6 +40,7 @@ def login():
         
     return render_template('index.html', msg = msg)
 
+
 @app.route("/logout")
 def logout():
     session.pop("loggedin", None)

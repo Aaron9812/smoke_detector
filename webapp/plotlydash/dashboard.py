@@ -20,10 +20,8 @@ def init_dashboard(server):
         ]
     )    
     
-    
     dff = clean_Data()
 
-    
     #creating the dash layout 
     dash_app.layout = html.Div([
         html.H1("IOT Dashboard"),
@@ -66,7 +64,7 @@ def init_callbacks(dash_app, dff):
         fig_1 = px.line(dff_filtered, 
             x="timestamp", y="temperature", title="Temp chart")
         fig_2 = px.line(dff_filtered, 
-            x="timestamp", y="co")
+            x="timestamp", y=["co","lpg","smoke"])
 
         return fig_1 , fig_2
 
