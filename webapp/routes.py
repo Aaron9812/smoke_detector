@@ -11,6 +11,7 @@ def index():
             return render_template("index.html")
     except:
         return render_template("login.html")
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     msg=""
@@ -74,7 +75,7 @@ def register():
         con.commit()
         con.close()
 
-        return render_template('you_are_registered.html')
+        return render_template('you_are_registered.html', name=first_name)
 
     else:
         return render_template('register.html')

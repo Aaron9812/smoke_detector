@@ -1,0 +1,39 @@
+body
+{
+
+	background-image: url("Hintergrundbild.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-height: 650px;
+
+}
+
+/*button
+{
+	text-align: center;
+	margin-top: 100px;
+	margin-left:100px;
+	padding: 10px 30px;
+	color: white;
+	background-color: #ffffff00;
+	border:solid 3px white;
+	border-radius: 35px;
+	font-family: Roboto;
+	font-size: 20px;
+
+}
+
+button2
+{
+	text-align: center;
+	margin-top: 100px;
+	margin-left:100px;
+	padding: 10px 30px;
+	color: white;
+	background-color: white;
+	border:solid 3px white;
+	border-radius: 35px;
+	font-color: black;
+	font-family: Roboto;
+	font-size: 20px;
+}
