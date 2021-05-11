@@ -47,7 +47,7 @@ def logout():
 @app.route("/livecheck")
 def livecheck():
     if "loggedin" in session:
-       return redirect(url_for('/dashapp/')) 
+        return redirect(url_for('/dashapp/')) 
     else:
         return redirect(url_for('/login',msg="Please login first")) 
 
