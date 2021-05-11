@@ -6,15 +6,10 @@ import mariadb
 
 @app.route("/")
 def index():
-    try:
-        if session["loggedin"]:
-            return render_template("index.html")
-    except:
-        return render_template("login.html")
+    return render_template("index.html")
 
 @app.route("/login", methods=["GET", "POST"])
-def login():
-    msg=""
+def login(msg=""):
     if request.method == "POST" and "email" in request.form and "password" in request.form:
         username = request.form["email"]
         password = request.form["password"]
@@ -33,7 +28,6 @@ def login():
             session['id'] = account[0]
             session['username'] = account[3]
             msg = 'Logged in successfully !'
-            print(session["id"])
             return redirect(url_for('/dashapp/'))
         else:
             msg = 'Incorrect username / password !'
@@ -48,6 +42,15 @@ def logout():
     session.pop('id', None)
     session.pop('username', None)
     return redirect(url_for('login'))
+
+
+@app.route("/livecheck")
+def livecheck():
+    if "loggedin" in session:
+       return redirect(url_for('/dashapp/')) 
+    else:
+        return redirect(url_for('/login',msg="Please login first")) 
+
 
 @app.route('/register', methods =['GET', 'POST'])
 def register():
