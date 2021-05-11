@@ -156,3 +156,11 @@ input {
   font-size: 16px;
   text-align: center;
 }
+
+.msg{
+	margin-top: 100px;
+	margin-left: 70px;
+	color: white;
+	font-family: 'Roboto';
+	font-size: 32px;	
+}

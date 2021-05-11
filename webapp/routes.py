@@ -3,6 +3,7 @@ from flask import current_app as app
 import api
 import re
 import mariadb
+import hashlib
 
 @app.route("/")
 def index():
@@ -17,7 +18,7 @@ def about():
 def login(msg=""):
     if request.method == "POST" and "email" in request.form and "password" in request.form:
         username = request.form["email"]
-        password = request.form["password"]
+        password = hashlib.md5(request.form["password"].encode())
         
         con = api.connect_to_DB()
         cursor = con.cursor()
@@ -54,7 +55,7 @@ def livecheck():
     if "loggedin" in session:
         return redirect(url_for('/dashapp/')) 
     else:
-        return redirect(url_for('/login',msg="Please login first")) 
+        return redirect(url_for("login")) 
 
 
 @app.route('/register', methods =['GET', 'POST'])
@@ -66,7 +67,7 @@ def register():
         last_name = request.form['last_name']
         email = request.form['email']
         phone_no = request.form['phone_no']
-        password = request.form['password']
+        password = hashlib.md5(request.form["password"].encode())
         street = request.form['street']
         street_no = request.form['street_no']
         zipcode = request.form['zipcode']
@@ -85,17 +86,15 @@ def register():
             print(f"Error: {e}")
 
         account = cursor.fetchone()
-        
-        #if account not None:
 
-
-        query1 = f"INSERT INTO users (first_name, last_name, email, phone_number, password, street, street_nr, zip, city, country_code, geo_lat, geo_long) VALUES ('{first_name}', '{last_name}', '{email}', '{phone_no}', '{password}', '{street}', '{street_no}', {zipcode}, '{city}', '{country_code}', {geo_lat}, {geo_long})"
-        cursor.execute(query1)
-        con.commit()
-        con.close()
-
-        return render_template('you_are_registered.html', name=first_name)
-
+        if account is None:
+            query1 = f"INSERT INTO users (first_name, last_name, email, phone_number, password, street, street_nr, zip, city, country_code, geo_lat, geo_long) VALUES ('{first_name}', '{last_name}', '{email}', '{phone_no}', '{password}', '{street}', '{street_no}', {zipcode}, '{city}', '{country_code}', {geo_lat}, {geo_long})"
+            cursor.execute(query1)
+            con.commit()
+            con.close()
+            return render_template('you_are_registered.html', name=first_name)
+        else:
+            return render_template('register.html', msg="This email is already in use")
     else:
-        return render_template('register.html', msg="Please enter all the necessary information")
+        return render_template('register.html')
 
