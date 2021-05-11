@@ -8,6 +8,11 @@ import mariadb
 def index():
     return render_template("index.html")
 
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
 @app.route("/login", methods=["GET", "POST"])
 def login(msg=""):
     if request.method == "POST" and "email" in request.form and "password" in request.form:
