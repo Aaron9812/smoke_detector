@@ -36,9 +36,9 @@ def login(msg=""):
             return redirect(url_for('/dashapp/'))
         else:
             msg = 'Incorrect username / password !'
-            return render_template('index.html', msg = msg)
+            return render_template('login.html', msg = msg)
         
-    return render_template('index.html', msg = msg)
+    return render_template('login.html', msg = msg)
 
 
 @app.route("/logout")
@@ -59,6 +59,7 @@ def livecheck():
 
 @app.route('/register', methods =['GET', 'POST'])
 def register():
+    msg = ""
     if request.method == 'POST' and 'first_name' in request.form and 'last_name' in request.form and 'email' in request.form and 'phone_no' in request.form and 'password' in request.form and 'street' in request.form and 'street_no' in request.form and 'zipcode' in request.form and 'city' in request.form:
 
         first_name = request.form['first_name']
@@ -84,7 +85,9 @@ def register():
             print(f"Error: {e}")
 
         account = cursor.fetchone()
-        print(account)
+        
+        #if account not None:
+
 
         query1 = f"INSERT INTO users (first_name, last_name, email, phone_number, password, street, street_nr, zip, city, country_code, geo_lat, geo_long) VALUES ('{first_name}', '{last_name}', '{email}', '{phone_no}', '{password}', '{street}', '{street_no}', {zipcode}, '{city}', '{country_code}', {geo_lat}, {geo_long})"
         cursor.execute(query1)
@@ -94,5 +97,5 @@ def register():
         return render_template('you_are_registered.html', name=first_name)
 
     else:
-        return render_template('register.html')
+        return render_template('register.html', msg="Please enter all the necessary information")
 
