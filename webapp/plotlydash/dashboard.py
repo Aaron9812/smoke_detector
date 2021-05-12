@@ -64,7 +64,7 @@ def init_callbacks(dash_app, dff):
         fig_1 = px.line(dff_filtered, 
             x="timestamp", y="temperature", title="Temp chart")
         fig_2 = px.line(dff_filtered, 
-            x="timestamp", y=["co","lpg","smoke"])
+            x="timestamp", y=["co", "lpg","smoke"],title="Gases chart" ,log_y=True)
 
         return fig_1 , fig_2
 
