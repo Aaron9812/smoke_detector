@@ -2,7 +2,8 @@
 
 # Temperaturabfrage
 import os, sys, time, datetime
-import api
+import random
+
 
 def aktuelleTemperatur():
       
@@ -19,22 +20,31 @@ def aktuelleTemperatur():
     rueckgabewert = '%6.2f' % temperature # %6 -->Dezimalzahl wird auf 6 Stellen mit Nullen aufgefüllt, um Kommafehler bei 1-stelligen Celsiuswerten zu vermeiden. 2:--> Komma nach zwei Stellen
     return(rueckgabewert)
 
-schleifenZaehler = 0
+#schleifenZaehler = 0
 Datum = datetime.datetime.now()
-schleifenPause = 1
+#schleifenPause = 1
 
 # Ausgabe zu Messbeginn
-print ("Temperaturabfrage für ", Datum,
-      " Messungen alle ", schleifenPause ," Sekunden gestartet")
+#print ("Temperaturabfrage für ", Datum,
+     # " Messungen alle ", schleifenPause ," Sekunden gestartet")
+
+#neuer Shit
+messdaten = aktuelleTemperatur()
 
 # Ausgabe während der Messung
-while True:
-    messdaten = aktuelleTemperatur()
-    Datum = datetime.datetime.now() #aktueller Zeitstempel
-    print ("Aktuelle Temperatur : ", messdaten, "°C",
-    "in der ", schleifenZaehler, ". Messabfrage", "Zeitstempel: ", Datum)
-    adding_data(device_id=1,temp=messdaten)
-    time.sleep(schleifenPause)
-    schleifenZaehler = schleifenZaehler + 1
+#while True:
+ #   messdaten = aktuelleTemperatur()
+  #  Datum = datetime.datetime.now() #aktueller Zeitstempel
+   # print ("Aktuelle Temperatur : ", messdaten, "°C",
+    #"in der ", schleifenZaehler, ". Messabfrage", "Zeitstempel: ", Datum)
+    #time.sleep(schleifenPause)
+    #Daten = float(messdaten)
     
-
+    #CO2
+   # C = random.randint(2600,2700)
+    #CO2_Gas = (Daten/C)*(Daten/23)**10
+    #print("CO2: ",CO2_Gas," ppm")
+    
+    #LPG_Gas
+    #schleifenZaehler = schleifenZaehler + 1
+print(messdaten)
