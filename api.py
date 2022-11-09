@@ -72,5 +72,5 @@ def get_geo_data(address):
     
     return country_code , lat , lng
 if __name__ == "__main__":
-    get_geo_data("Leinerstr. 23 78462 Konstanz")
+    pass
     
